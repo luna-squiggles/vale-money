@@ -7,8 +7,8 @@ import { useNavigationContext } from '../contexts/NavigationContext.tsx';
 
 const translations = {
   en: {
-    title: "About the Boycott",
-    subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "You've spoken and I've listened...",
+    subtitle: "People keep telling me they're tired of politicians wasting their money. Well... fair enough.",
     missionTitle: "Our Mission",
     missionBody1: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     missionBody2: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
@@ -80,7 +80,7 @@ const AboutPage: React.FC = () => {
           
           <ScrollReveal direction="up" delay={200}>
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-              {t.subtitle}
+              People keep telling me they're tired of politicians wasting their money. <em>Well... fair enough.</em>
             </p>
           </ScrollReveal>
         </div>

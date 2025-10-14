@@ -73,7 +73,7 @@ const Navigation: React.FC = () => {
                     onClick={() => setIsNavigating(true)}
                   >
                     <span className={`relative z-10 transition-colors duration-200 ${
-                      (isActive && hoveredPath === null) || isHovered ? 'text-white' : isScrolled ? 'text-gray-700' : 'text-white'
+                      (isActive && hoveredPath === null) || isHovered ? 'text-white' : 'text-gray-700'
                     }`}>
                       {item.label}
                     </span>
@@ -136,7 +136,7 @@ const Navigation: React.FC = () => {
               <div className="md:hidden">
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className={`p-2 rounded-md transition-colors duration-200 ${isScrolled ? 'text-brand-blue' : 'text-white'}`}
+                  className="p-2 rounded-md text-brand-blue"
                 >
                   {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>

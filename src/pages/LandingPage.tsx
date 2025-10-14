@@ -92,18 +92,18 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Custom Cursor */}
-      <motion.div
+    <div className="min-h-screen bg-white">
+      {/* Custom Cursor - Commented out for image background */}
+      {/* <motion.div
         className="fixed top-0 left-0 bg-white/90 text-gray-900 text-sm font-semibold px-4 py-2 rounded-full z-50 pointer-events-none"
         variants={cursorVariants}
         animate={isHoveringVideo ? 'hover' : 'default'}
       >
         {t.watchVideo}
-      </motion.div>
+      </motion.div> */}
 
-      {/* Video Player Modal */}
-      {isPlayerOpen && (
+      {/* Video Player Modal - Commented out for image background */}
+      {/* {isPlayerOpen && (
         <motion.div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100]"
           initial={{ opacity: 0 }}
@@ -129,17 +129,28 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      )}
+      )} */}
 
-      {/* Hero Section with Video */}
+      {/* Hero Section with Image */}
       <section
-        className="relative h-screen flex items-center justify-center overflow-hidden cursor-pointer"
-        onClick={() => setIsPlayerOpen(true)}
-        onMouseEnter={() => setIsHoveringVideo(true)}
-        onMouseLeave={() => setIsHoveringVideo(false)}
+        className="relative h-screen flex items-center justify-center overflow-hidden"
       >
-        {/* Background Video */}
-        <video
+        {/* To enable video click functionality, uncomment the following attributes:
+             className="relative h-screen flex items-center justify-center overflow-hidden cursor-pointer"
+             onClick={() => setIsPlayerOpen(true)}
+             onMouseEnter={() => setIsHoveringVideo(true)}
+             onMouseLeave={() => setIsHoveringVideo(false)}
+        */}
+        {/* Background Image */}
+        <img
+          src="/ValeofGlamorgan.jpeg"
+          alt="Vale of Glamorgan"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ zIndex: 0 }}
+        />
+
+        {/* Background Video - Commented out, uncomment to use video instead */}
+        {/* <video
           ref={videoRef}
           autoPlay
           muted
@@ -150,9 +161,9 @@ const LandingPage: React.FC = () => {
         >
           <source src="/placeholder.mp4" type="video/mp4" />
           Your browser does not support the video tag.
-        </video>
+        </video> */}
 
-        {/* Video Overlay for better text readability */}
+        {/* Overlay for better text readability */}
         <div
           className="absolute inset-0 w-full h-full"
           style={{
@@ -167,7 +178,7 @@ const LandingPage: React.FC = () => {
             <h1
               className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg"
             >
-              <span style={{ color: '#F7F9F9' }}>{t.headline.campaign}</span>
+              <span style={{ color: '#FFFFFF' }}>{t.headline.campaign}</span>
             </h1>
             <p className="text-xl md:text-2xl font-medium drop-shadow-md text-gray-700 max-w-2xl mx-auto">
               {t.subheadline}
