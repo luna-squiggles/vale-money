@@ -11,9 +11,10 @@ interface MapPin {
 
 interface InteractiveMapProps {
   onComplete?: (pins: MapPin[]) => void;
+  onSubmit?: (pins: MapPin[]) => void;
 }
 
-const InteractiveMap: React.FC<InteractiveMapProps> = ({ onComplete }) => {
+const InteractiveMap: React.FC<InteractiveMapProps> = ({ onComplete, onSubmit }) => {
   const [pins, setPins] = useState<MapPin[]>([]);
   const [isAddingPin, setIsAddingPin] = useState(false);
   const [newPinPosition, setNewPinPosition] = useState<{ x: number; y: number } | null>(null);
@@ -31,7 +32,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ onComplete }) => {
     setIsAddingPin(true);
   };
 
-  const handleAddPin = () => {
+  const handleAddPin = async () => {
     if (!newPinPosition || !labelInput.trim()) return;
 
     const newPin: MapPin = {
@@ -41,10 +42,33 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ onComplete }) => {
       label: labelInput.trim(),
     };
 
-    setPins([...pins, newPin]);
+    const updatedPins = [...pins, newPin];
+    setPins(updatedPins);
     setIsAddingPin(false);
     setNewPinPosition(null);
     setLabelInput('');
+
+    // Submit pin immediately to Supabase
+    if (onSubmit) {
+      try {
+        await onSubmit([newPin]); // Submit just this new pin
+        console.log('Pin submitted successfully:', newPin);
+      } catch (error) {
+        console.error('Failed to submit pin:', error);
+      }
+    }
+
+    // Update parent component with new pins
+    if (onComplete) {
+      onComplete(updatedPins);
+    }
+
+    // If this is the first pin, automatically scroll to form after 2 seconds
+    if (pins.length === 0) {
+      setTimeout(() => {
+        document.getElementById('form-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 2000);
+    }
   };
 
   const handleCancelPin = () => {
@@ -54,14 +78,30 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ onComplete }) => {
   };
 
   const handleRemovePin = (id: string) => {
-    setPins(pins.filter(pin => pin.id !== id));
-  };
-
-  const handleContinue = () => {
+    const updatedPins = pins.filter(pin => pin.id !== id);
+    setPins(updatedPins);
+    
+    // Update parent component with updated pins
     if (onComplete) {
-      onComplete(pins);
+      onComplete(updatedPins);
     }
   };
+
+  // Function to handle form submission - this will be called when the Tally form is submitted
+  const handleFormSubmission = () => {
+    if (onSubmit && pins.length > 0) {
+      onSubmit(pins);
+    }
+  };
+
+  // Expose the submission function globally so the Tally form can call it
+  React.useEffect(() => {
+    (window as any).submitMapPins = handleFormSubmission;
+    return () => {
+      delete (window as any).submitMapPins;
+    };
+  }, [pins, onSubmit]);
+
 
   return (
     <div className="w-full">
@@ -138,24 +178,6 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ onComplete }) => {
           />
         )}
 
-        {/* Continue Button - Overlaid on bottom of map */}
-        {pins.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-24 left-0 right-0 flex justify-center z-20 pointer-events-none"
-          >
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleContinue();
-              }}
-              className="px-8 py-3 bg-brand-blue text-white rounded-full font-semibold hover:bg-brand-blue/90 transition-all duration-300 hover:scale-105 shadow-lg pointer-events-auto"
-            >
-              Continue to Form
-            </button>
-          </motion.div>
-        )}
       </div>
 
       {/* Label Input Modal */}

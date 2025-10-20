@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import LandingPage from './pages/LandingPage';
 import SignPage from './pages/SignPage';
-import AboutPage from './pages/AboutPage';
+import CommunitySuggestionsPage from './pages/CommunitySuggestionsPage';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -17,7 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/sign" element={<SignPage />} />
-            <Route path="/about" element={<AboutPage />} />
+            <Route path="/suggestions" element={<CommunitySuggestionsPage />} />
           </Routes>
         </main>
         <Footer />

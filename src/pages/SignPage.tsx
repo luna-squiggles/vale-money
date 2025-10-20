@@ -5,6 +5,7 @@ import { Info } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useNavigationContext } from '../contexts/NavigationContext.tsx';
 import InteractiveMap from '../components/InteractiveMap';
+import { submitConsultationData } from '../services/submissionService';
 
 const translations = {
   en: {
@@ -35,16 +36,31 @@ const SignPage: React.FC = () => {
   const { language } = useLanguage();
   const { setIsNavigating } = useNavigationContext();
   const t = translations[language];
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
   const [mapPins, setMapPins] = useState<any[]>([]);
 
   const handleMapComplete = (pins: any[]) => {
     setMapPins(pins);
-    setShowForm(true);
     // Scroll to form section
     setTimeout(() => {
       document.getElementById('form-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
+  };
+
+  const handleFormSubmission = async (pins: any[]) => {
+    try {
+      // This will be called when pins are added or when the Tally form is submitted
+      const formData = {
+        submitted_at: new Date().toISOString(),
+        has_pins: pins.length > 0,
+        submission_type: pins.length === 1 ? 'pin_only' : 'full_submission'
+      };
+      
+      await submitConsultationData(pins, formData);
+      console.log('Consultation data submitted successfully', { pins, formData });
+    } catch (error) {
+      console.error('Failed to submit consultation data:', error);
+    }
   };
 
   return (
@@ -85,72 +101,67 @@ const SignPage: React.FC = () => {
       {/* Interactive Map Section */}
       <section className="pt-32 bg-white">
         <ScrollReveal direction="up" delay={300}>
-          <InteractiveMap onComplete={handleMapComplete} />
+            <InteractiveMap onComplete={handleMapComplete} onSubmit={handleFormSubmission} />
         </ScrollReveal>
       </section>
 
-      {/* Form Section - Only shown after map interaction */}
-      {showForm && (
-        <>
-          {/* Diagonal Separator */}
-          <div className="relative bg-white -mb-1 -mt-1">
-            <div className="absolute top-0 left-0 w-full h-[12vw] max-h-48 -mt-[6vw] z-10">
-              <svg
-                className="w-full h-full fill-brand-green"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-              >
-                <polygon points="0,35 100,0 100,65 0,100" />
-              </svg>
-            </div>
-          </div>
-
-          {/* Petition Form Section */}
-          <section 
-            id="form-section"
-            className="pt-32 pb-10 px-4 bg-white"
+      {/* Diagonal Separator */}
+      <div className="relative bg-white -mb-1 -mt-1">
+        <div className="absolute top-0 left-0 w-full h-[12vw] max-h-48 -mt-[6vw] z-10">
+          <svg
+            className="w-full h-full fill-brand-green"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
           >
-            <div className="max-w-6xl mx-auto">
-              <ScrollReveal direction="up" delay={300}>
-                <div className="max-w-2xl mx-auto text-center">
-                  {/* Map Pins Summary */}
-                  {mapPins.length > 0 && (
-                    <div className="mb-8 p-4 bg-brand-blue/5 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-2">Your suggestions from the map:</p>
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        {mapPins.map((pin) => (
-                          <span key={pin.id} className="px-3 py-1 bg-brand-red/10 text-brand-red rounded-full text-sm">
-                            {pin.label}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Tally.so Embedded Form */}
-                  <div className="w-full">
-                    <h2 
-                      className="text-3xl font-bold mb-4 text-brand-blue"
-                    >
-                      {t.formTitle}
-                    </h2>
-                    <iframe
-                      src="https://tally.so/embed/w2Q4kg?hideTitle=1&transparentBackground=1&dynamicHeight=1"
-                      width="100%"
-                      height="900"
-                      frameBorder="0"
-                      marginHeight={0}
-                      marginWidth={0}
-                      title="Vale Consultation Form"
-                    ></iframe>
+            <polygon points="0,35 100,0 100,65 0,100" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Form Section */}
+      <section 
+        id="form-section"
+        className="pt-32 pb-10 px-4 bg-white"
+      >
+        <div className="max-w-6xl mx-auto">
+          <ScrollReveal direction="up" delay={300}>
+            <div className="max-w-2xl mx-auto text-center">
+              {/* Map Pins Summary */}
+              {mapPins.length > 0 && (
+                <div className="mb-8 p-4 bg-brand-blue/5 rounded-lg">
+                  <p className="text-sm text-gray-600 mb-2">Your suggestions from the map:</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {mapPins.map((pin) => (
+                      <span key={pin.id} className="px-3 py-1 bg-brand-red/10 text-brand-red rounded-full text-sm">
+                        {pin.label}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              </ScrollReveal>
+              )}
+              
+              {/* Tally.so Embedded Form */}
+              <div className="w-full">
+                <h2 
+                  className="text-3xl font-bold mb-4 text-brand-blue"
+                >
+                  {t.formTitle}
+                </h2>
+                <iframe
+                  src="https://tally.so/embed/w2Q4kg?hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                  width="100%"
+                  height="900"
+                  frameBorder="0"
+                  marginHeight={0}
+                  marginWidth={0}
+                  title="Vale Consultation Form"
+                ></iframe>
+              </div>
             </div>
-          </section>
-        </>
-      )}
+          </ScrollReveal>
+        </div>
+      </section>
 
       {/* Diagonal Separator */}
       <div className="relative bg-white -mb-1">
@@ -193,16 +204,6 @@ const SignPage: React.FC = () => {
                     {t.processBody}
                   </p>
                 </div>
-              </div>
-              <div className="mt-12">
-                <Link
-                  to="/about"
-                  className="inline-flex items-center px-6 py-3 text-md font-semibold text-brand-blue rounded-full border-2 border-brand-blue transition-all duration-300 hover:bg-brand-blue hover:text-white hover:shadow-lg"
-                  onClick={() => setIsNavigating(true)}
-                >
-                  <Info className="mr-2" size={20} />
-                  {t.findOutMore}
-                </Link>
               </div>
             </div>
           </ScrollReveal>

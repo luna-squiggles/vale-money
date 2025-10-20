@@ -93,7 +93,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Custom Cursor - Commented out for image background */}
+      {/* Custom Cursor - Commented out */}
       {/* <motion.div
         className="fixed top-0 left-0 bg-white/90 text-gray-900 text-sm font-semibold px-4 py-2 rounded-full z-50 pointer-events-none"
         variants={cursorVariants}
@@ -102,8 +102,8 @@ const LandingPage: React.FC = () => {
         {t.watchVideo}
       </motion.div> */}
 
-      {/* Video Player Modal - Commented out for image background */}
-      {/* {isPlayerOpen && (
+      {/* Video Player Modal */}
+      {isPlayerOpen && (
         <motion.div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100]"
           initial={{ opacity: 0 }}
@@ -120,7 +120,7 @@ const LandingPage: React.FC = () => {
             </button>
             <div className="aspect-video">
               <video
-                src="/placeholder.mp4"
+                src="/placeholder-square.mp4"
                 className="w-full h-full"
                 controls
                 autoPlay
@@ -129,61 +129,54 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
         </motion.div>
-      )} */}
+      )}
 
-      {/* Hero Section with Image */}
-      <section
-        className="relative h-screen flex items-center justify-center overflow-hidden"
-      >
-        {/* To enable video click functionality, uncomment the following attributes:
-             className="relative h-screen flex items-center justify-center overflow-hidden cursor-pointer"
-             onClick={() => setIsPlayerOpen(true)}
-             onMouseEnter={() => setIsHoveringVideo(true)}
-             onMouseLeave={() => setIsHoveringVideo(false)}
-        */}
-        {/* Background Image */}
-        <img
-          src="/ValeofGlamorgan.jpeg"
-          alt="Vale of Glamorgan"
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ zIndex: 0 }}
-        />
+      {/* Hero Section with Video and Text */}
+      <section className="relative min-h-screen flex items-center bg-white overflow-hidden py-20">
+        <div className="max-w-7xl mx-auto px-4 w-full">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Video on the Left */}
+            <ScrollReveal direction="left">
+              <div 
+                className="relative aspect-square overflow-hidden rounded-2xl shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
+                onClick={() => setIsPlayerOpen(true)}
+                onMouseEnter={() => setIsHoveringVideo(true)}
+                onMouseLeave={() => setIsHoveringVideo(false)}
+              >
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src="/placeholder-square.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                {/* Play overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                  <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 ml-1 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
 
-        {/* Background Video - Commented out, uncomment to use video instead */}
-        {/* <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ zIndex: 0 }}
-        >
-          <source src="/placeholder.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video> */}
-
-        {/* Overlay for better text readability */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            backgroundColor: 'rgba(252, 245, 229, 0.3)',
-            zIndex: 1
-          }}
-        />
-
-        {/* Overlay Content */}
-        <div className="relative z-10 text-center text-white px-4 select-none">
-          <ScrollReveal direction="fade">
-            <h1
-              className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-lg"
-            >
-              <span style={{ color: '#FFFFFF' }}>{t.headline.campaign}</span>
-            </h1>
-            <p className="text-xl md:text-2xl font-medium drop-shadow-md text-gray-700 max-w-2xl mx-auto">
-              {t.subheadline}
-            </p>
-          </ScrollReveal>
+            {/* Text on the Right */}
+            <ScrollReveal direction="right">
+              <div className="space-y-6">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-brand-blue leading-tight">
+                  {t.headline.campaign}
+                </h1>
+                <p className="text-2xl md:text-3xl text-gray-700 leading-relaxed">
+                  {t.subheadline}
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
@@ -220,7 +213,7 @@ const LandingPage: React.FC = () => {
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={400}>
-              <div className="flex justify-center items-center space-x-4">
+              <div className="flex justify-center items-center">
                 <Link
                   to="/sign"
                   className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl bg-brand-blue"
@@ -228,14 +221,6 @@ const LandingPage: React.FC = () => {
                 >
                   <FileSignature className="mr-3" size={24} />
                   {t.ctaButton}
-                </Link>
-                <Link
-                  to="/about"
-                  className="inline-flex items-center px-6 py-3 text-md font-semibold text-brand-blue rounded-full border-2 border-brand-blue transition-all duration-300 hover:bg-brand-blue hover:text-white hover:shadow-lg"
-                  onClick={() => setIsNavigating(true)}
-                >
-                  <Info className="mr-2" size={20} />
-                  {t.findOutMore}
                 </Link>
               </div>
             </ScrollReveal>
