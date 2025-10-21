@@ -27,7 +27,7 @@ const translations = {
     headline: {
       campaign: "[Campaign Name]"
     },
-    subheadline: "£[amount] for the Vale of Glamorgan. How we spend it is up to you.",
+    subheadline: "£40 million for the Vale. £750,000 spent by you, for you",
     ctaTitle: "What's Happening?",
     ctaBody1: "As part of Labour's [insert initiative] I have secured £[amount] for the Vale of Glamorgan",
     ctaBody2: "I'm opening the floor to you to help us decide how to use this exciting opportunity",
@@ -39,7 +39,7 @@ const translations = {
     headline: {
       campaign: "[Enw'r Ymgyrch]"
     },
-    subheadline: "£[swm] ar gyfer Bro Morgannwg. Sut rydym yn ei wario sydd i fyny i chi.",
+    subheadline: "£40 miliwn ar gyfer y Fro. £750,000 wedi'i wario gennych chi, i chi",
     ctaTitle: "Beth Sy'n Digwydd?",
     ctaBody1: "Fel rhan o [cynllun] Llafur, rydw i wedi sicrhau £[swm] ar gyfer Bro Morgannwg",
     ctaBody2: "Rydw i'n agor y llawr i chi i'n helpu i benderfynu sut i ddefnyddio'r cyfle cyffrous hwn",
@@ -136,7 +136,7 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 w-full">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Video on the Left */}
-            <ScrollReveal direction="left">
+            <div>
               <div 
                 className="relative aspect-square overflow-hidden rounded-2xl shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
                 onClick={() => setIsPlayerOpen(true)}
@@ -163,11 +163,11 @@ const LandingPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </ScrollReveal>
+            </div>
 
             {/* Text on the Right */}
-            <ScrollReveal direction="right">
-              <div className="space-y-6">
+            <div>
+              <div className="space-y-6 md:pl-8">
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-brand-blue leading-tight">
                   {t.headline.campaign}
                 </h1>
@@ -175,25 +175,14 @@ const LandingPage: React.FC = () => {
                   {t.subheadline}
                 </p>
               </div>
-            </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Call to Action Section */}
       <div className="relative bg-white">
-        {/* Diagonal Separator */}
-        <div className="absolute top-0 left-0 w-full h-[12vw] max-h-48 -mt-[6vw] z-10">
-          <svg
-            className="w-full h-full fill-white"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            <polygon points="0,35 100,0 100,65 0,100" />
-          </svg>
-        </div>
-        <section className="relative z-20 pt-28 pb-10 px-4 bg-white">
+        <section className="relative z-20 pt-10 pb-10 px-4 bg-white">
           <div className="max-w-4xl mx-auto text-center">
             <ScrollReveal direction="up">
               <h2

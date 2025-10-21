@@ -3,11 +3,12 @@ import { motion } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
 import { getApprovedPins } from '../services/submissionService';
 import { useLanguage } from '../contexts/LanguageContext';
+import MapboxCommunityMap from '../components/MapboxCommunityMap';
 
 interface PinSubmission {
   id?: string;
-  x: number;
-  y: number;
+  lng: number;
+  lat: number;
   label: string;
   created_at?: string;
   approved?: boolean;
@@ -49,7 +50,19 @@ const CommunitySuggestionsPage: React.FC = () => {
       console.log('Fetching approved pins...');
       const approvedPins = await getApprovedPins();
       console.log('Approved pins received:', approvedPins);
-      setPins(approvedPins);
+      
+      // Convert old x/y format to lng/lat format if needed
+      const convertedPins = approvedPins.map(pin => {
+        // If pin has x/y (old format), skip it or convert it
+        if ('x' in pin && 'y' in pin && !('lng' in pin)) {
+          console.log('Skipping old x/y format pin:', pin);
+          return null;
+        }
+        return pin;
+      }).filter(Boolean) as PinSubmission[];
+      
+      console.log('Converted pins:', convertedPins);
+      setPins(convertedPins);
     } catch (err) {
       setError('Failed to load suggestions');
       console.error('Error loading pins:', err);
@@ -103,41 +116,8 @@ const CommunitySuggestionsPage: React.FC = () => {
           ) : (
             <ScrollReveal direction="up">
               <div className="mb-12">
-                {/* Map Container */}
-                <div className="relative w-full bg-gray-100 overflow-hidden">
-                  <img
-                    src="/Map.png"
-                    alt="Vale of Glamorgan Map"
-                    className="w-full h-auto object-contain"
-                    draggable={false}
-                  />
-                  
-                  {/* All Pins */}
-                  {pins.map((pin, index) => (
-                    <motion.div
-                      key={pin.id || index}
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="absolute"
-                      style={{
-                        left: `${pin.x}%`,
-                        top: `${pin.y}%`,
-                        transform: 'translate(-50%, -100%)',
-                      }}
-                    >
-                      <div className="relative group">
-                        {/* Pin */}
-                        <div className="w-6 h-6 bg-brand-red rounded-full border-3 border-white shadow-lg flex items-center justify-center cursor-pointer hover:scale-125 transition-transform">
-                        </div>
-                        {/* Label - shows on hover */}
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white px-3 py-1 rounded-lg shadow-md whitespace-nowrap text-sm font-medium text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                          {pin.label}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+                {/* Mapbox Community Map */}
+                <MapboxCommunityMap pins={pins} />
                 
                 {/* Stats below map */}
                 <div className="text-center mt-6">

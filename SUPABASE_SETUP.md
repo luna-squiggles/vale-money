@@ -31,7 +31,16 @@ Create a `.env` file in your project root with:
 ```
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_MAPBOX_TOKEN=your_mapbox_access_token
 ```
+
+### Getting a Mapbox Token:
+1. Go to [mapbox.com](https://www.mapbox.com/) and create a free account
+2. Go to your [Account page](https://account.mapbox.com/)
+3. Copy your **Default public token**
+4. Add it to your `.env` file as `VITE_MAPBOX_TOKEN`
+
+**Note:** The free tier includes 50,000 map loads per month - more than enough for most projects!
 
 ## 4. Row Level Security (RLS)
 

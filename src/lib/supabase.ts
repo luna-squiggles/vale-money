@@ -14,8 +14,8 @@ export const supabase = createClient(supabaseUrl, supabaseKey)
 // Types for our database
 export interface PinSubmission {
   id?: string
-  x: number
-  y: number
+  lng: number
+  lat: number
   label: string
   created_at?: string
   approved?: boolean

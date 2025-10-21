@@ -5,6 +5,7 @@ import { Info } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useNavigationContext } from '../contexts/NavigationContext.tsx';
 import InteractiveMap from '../components/InteractiveMap';
+import MapboxInteractiveMap from '../components/MapboxInteractiveMap';
 import { submitConsultationData } from '../services/submissionService';
 
 const translations = {
@@ -101,7 +102,7 @@ const SignPage: React.FC = () => {
       {/* Interactive Map Section */}
       <section className="pt-32 bg-white">
         <ScrollReveal direction="up" delay={300}>
-            <InteractiveMap onComplete={handleMapComplete} onSubmit={handleFormSubmission} />
+            <MapboxInteractiveMap onComplete={handleMapComplete} onSubmit={handleFormSubmission} />
         </ScrollReveal>
       </section>
 
