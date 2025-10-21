@@ -123,7 +123,7 @@ const SignPage: React.FC = () => {
       {/* Form Section */}
       <section 
         id="form-section"
-        className="pt-32 pb-10 px-4 bg-white"
+        className="pt-32 pb-20 px-4 bg-white"
       >
         <div className="max-w-6xl mx-auto">
           <ScrollReveal direction="up" delay={300}>

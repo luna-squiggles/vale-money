@@ -24,7 +24,7 @@ VITE_MAPBOX_TOKEN=pk.eyJ1IjoieW91ci11c2VybmFtZSIsImEiOiJja...
 1. Go to your Netlify dashboard
 2. Site settings → Environment variables
 3. Add new variable:
-   - Name: `VITE_MAPBOX_TOKEN`
+   - Name: `ns page `
    - Value: Your Mapbox public token
 4. Redeploy your site
 
