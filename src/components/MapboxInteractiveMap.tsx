@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import Map, { Marker, NavigationControl } from 'react-map-gl';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../contexts/LanguageContext';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 interface MapPin {
@@ -16,12 +17,33 @@ interface MapboxInteractiveMapProps {
   onSubmit?: (pins: MapPin[]) => void;
 }
 
+const translations = {
+  en: {
+    mapTitle: "Where should we invest?",
+    mapInstruction: "Click anywhere on the map to add a pin and tell us what you'd like to see in that area",
+    modalTitle: "What would you like to see here?",
+    placeholder: "New Playground, Cycle Lane",
+    cancel: "Cancel",
+    addPin: "Add Pin",
+  },
+  cy: {
+    mapTitle: "Ble ddylem ni fuddsoddi?",
+    mapInstruction: "Cliciwch unrhyw le ar y map i ychwanegu pin a dweud wrthym beth hoffech chi ei weld yn yr ardal honno",
+    modalTitle: "Beth hoffech chi ei weld yma?",
+    placeholder: "Maes Chwarae Newydd, Llwybr Beicio",
+    cancel: "Canslo",
+    addPin: "Ychwanegu Pin",
+  }
+};
+
 const MapboxInteractiveMap: React.FC<MapboxInteractiveMapProps> = ({ onComplete, onSubmit }) => {
   const [pins, setPins] = useState<MapPin[]>([]);
   const [isAddingPin, setIsAddingPin] = useState(false);
   const [newPinPosition, setNewPinPosition] = useState<{ lng: number; lat: number } | null>(null);
   const [labelInput, setLabelInput] = useState('');
   const mapRef = useRef(null);
+  const { language } = useLanguage();
+  const t = translations[language];
 
   // Vale of Glamorgan coordinates
   const [viewState, setViewState] = useState({
@@ -96,10 +118,10 @@ const MapboxInteractiveMap: React.FC<MapboxInteractiveMapProps> = ({ onComplete,
     <div className="w-full">
       <div className="mb-6 text-center px-4">
         <h3 className="text-2xl font-bold text-brand-blue mb-2">
-          Where should we invest?
+          {t.mapTitle}
         </h3>
         <p className="text-gray-600">
-          Click anywhere on the map to add a pin and tell us what you'd like to see in that area
+          {t.mapInstruction}
         </p>
       </div>
 
@@ -177,7 +199,7 @@ const MapboxInteractiveMap: React.FC<MapboxInteractiveMapProps> = ({ onComplete,
               onClick={(e) => e.stopPropagation()}
             >
               <h4 className="text-xl font-bold text-brand-blue mb-4">
-                What would you like to see here?
+                {t.modalTitle}
               </h4>
               <input
                 type="text"
@@ -188,7 +210,7 @@ const MapboxInteractiveMap: React.FC<MapboxInteractiveMapProps> = ({ onComplete,
                     handleAddPin();
                   }
                 }}
-                placeholder="New Playground, Cycle Lane"
+                placeholder={t.placeholder}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue mb-4"
                 autoFocus
               />
@@ -197,14 +219,14 @@ const MapboxInteractiveMap: React.FC<MapboxInteractiveMapProps> = ({ onComplete,
                   onClick={handleCancelPin}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
                 >
-                  Cancel
+                  {t.cancel}
                 </button>
                 <button
                   onClick={handleAddPin}
                   disabled={!labelInput.trim()}
                   className="flex-1 px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-brand-blue/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Add Pin
+                  {t.addPin}
                 </button>
               </div>
             </motion.div>
