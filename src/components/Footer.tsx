@@ -41,9 +41,9 @@ const Footer: React.FC = () => {
         />
         <div className="relative z-10 max-w-7xl mx-auto flex justify-between items-center">
           <div>
-            <p className="text-xl text-white font-bold">[Campaign Name]</p>
-            <a href="mailto:[Campaign Email]" className="text-white/80 hover:text-white transition-colors">
-              [Campaign Email]
+            <p className="text-xl text-white font-bold">Our Cash Your Call</p>
+            <a href="mailto:kanishka.narayan.mp@parliament.uk" className="text-white/80 hover:text-white transition-colors">
+              kanishka.narayan.mp@parliament.uk
             </a>
           </div>
           <div className="flex space-x-6">

@@ -10,8 +10,8 @@ import { submitConsultationData } from '../services/submissionService';
 
 const translations = {
   en: {
-    title: "Get involved in the consultation",
-    subtitle: "Your opinion matters. Join Kanishka in shaping the Vale by sharing your views. Together we can make the Vale work for everyone.",
+    title: "You decide",
+    subtitle: "Your community. Your choices.\nTell us what matters most for the Vale.",
     formTitle: "Have Your Say",
     infoTitle: "Why get involved?",
     impactTitle: "Collective Impact",
@@ -21,8 +21,8 @@ const translations = {
     findOutMore: "Find out more",
   },
   cy: {
-    title: "Cymryd rhan yn yr ymgynghoriad",
-    subtitle: "Mae eich barn yn bwysig. Ymunwch â Kanishka i siapio'r Fro trwy rannu eich barn. Gyda'n gilydd, gallwn wneud y Fro yn gweithio i bawb.",
+    title: "Chi benderfynu",
+    subtitle: "Eich cymuned. Eich dewisiadau.\nDywedwch wrthym beth sy'n bwysicaf i'r Fro.",
     formTitle: "Cael Eich Dweud",
     infoTitle: "Pam gymryd rhan?",
     impactTitle: "Effaith Gyfunol",

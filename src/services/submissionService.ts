@@ -31,19 +31,18 @@ export const getApprovedPins = async () => {
     const { data, error } = await supabase
       .from('consultation_submissions')
       .select('pins')
-      // Remove the approved filter for now to show all pins
-      // .eq('approved', true)
+      .eq('approved', true) // Only get approved submissions
 
     if (error) {
       console.error('Error fetching pins:', error)
       throw error
     }
 
-    console.log('Raw submissions from database:', data)
+    console.log('Raw approved submissions from database:', data)
 
-    // Flatten all pins from all submissions
+    // Flatten all pins from approved submissions only
     const allPins = data.flatMap(submission => submission.pins)
-    console.log('Flattened pins:', allPins)
+    console.log('Flattened approved pins:', allPins)
     return allPins
   } catch (error) {
     console.error('Failed to fetch pins:', error)

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Map, { Marker, NavigationControl, Popup } from 'react-map-gl';
+import Map, { Marker, NavigationControl } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 interface MapPin {
@@ -14,7 +14,7 @@ interface MapboxCommunityMapProps {
 }
 
 const MapboxCommunityMap: React.FC<MapboxCommunityMapProps> = ({ pins }) => {
-  const [popupInfo, setPopupInfo] = useState<MapPin | null>(null);
+  const [hoveredPin, setHoveredPin] = useState<MapPin | null>(null);
   
   // Vale of Glamorgan coordinates
   const [viewState, setViewState] = useState({
@@ -44,30 +44,25 @@ const MapboxCommunityMap: React.FC<MapboxCommunityMapProps> = ({ pins }) => {
             anchor="bottom"
           >
             <div
-              className="w-6 h-6 bg-brand-red rounded-full border-3 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform"
-              onClick={(e) => {
-                e.stopPropagation();
-                setPopupInfo(pin);
-              }}
-            />
+              className="relative group"
+              onMouseEnter={() => setHoveredPin(pin)}
+              onMouseLeave={() => setHoveredPin(null)}
+            >
+              <div className="w-6 h-6 bg-brand-red rounded-full border-3 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform" />
+              
+              {/* Hover Tooltip */}
+              {hoveredPin && hoveredPin === pin && (
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-white rounded-lg shadow-lg border border-gray-200 whitespace-nowrap z-10">
+                  <div className="text-sm font-medium text-gray-800">
+                    {pin.label}
+                  </div>
+                  {/* Arrow pointing down */}
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white"></div>
+                </div>
+              )}
+            </div>
           </Marker>
         ))}
-
-        {/* Popup on click */}
-        {popupInfo && (
-          <Popup
-            longitude={popupInfo.lng}
-            latitude={popupInfo.lat}
-            anchor="bottom"
-            onClose={() => setPopupInfo(null)}
-            closeButton={true}
-            closeOnClick={false}
-          >
-            <div className="p-2">
-              <p className="font-medium text-gray-800">{popupInfo.label}</p>
-            </div>
-          </Popup>
-        )}
       </Map>
     </div>
   );

@@ -9,12 +9,10 @@ const translations = {
   en: {
     home: 'Home',
     sign: 'Have Your Say',
-    suggestions: 'Map (FOR TESTING)',
   },
   cy: {
     home: 'Hafan',
     sign: 'Cael Eich Dweud',
-    suggestions: 'Map (AR GYFER PROFI)',
   },
 };
 
@@ -30,7 +28,6 @@ const Navigation: React.FC = () => {
   const navItems = [
     { path: '/', label: t.home },
     { path: '/sign', label: t.sign },
-    { path: '/suggestions', label: t.suggestions },
   ];
 
   useEffect(() => {

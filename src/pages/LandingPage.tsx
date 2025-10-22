@@ -5,6 +5,8 @@ import ScrollReveal from '../components/ScrollReveal';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useNavigationContext } from '../contexts/NavigationContext.tsx';
+import MapboxCommunityMap from '../components/MapboxCommunityMap';
+import { getApprovedPins } from '../services/submissionService';
 
 const useMousePosition = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -25,24 +27,24 @@ const useMousePosition = () => {
 const translations = {
   en: {
     headline: {
-      campaign: "[Campaign Name]"
+      campaign: "Our Cash Your Call"
     },
-    subheadline: "£40 million for the Vale. £750,000 spent by you, for you",
+    subheadline: "£41.5 million for the Vale: our community calling the shots on how it's spent",
     ctaTitle: "What's Happening?",
-    ctaBody1: "As part of Labour's [insert initiative] I have secured £[amount] for the Vale of Glamorgan",
-    ctaBody2: "I'm opening the floor to you to help us decide how to use this exciting opportunity",
+    ctaBody1: "People are tired of politicians wasting their money.\nSo in the Vale, we're doing things differently.\nWe've secured £41.5 million for local investment and you'll decide how it's spent.\nFrom high streets to youth projects, this time our community calls the shots.",
+    ctaBody2: "",
     ctaButton: "Have Your Say",
     findOutMore: "Find out more",
     watchVideo: "Watch Video",
   },
   cy: {
     headline: {
-      campaign: "[Enw'r Ymgyrch]"
+      campaign: "Ein Arian Eich Penderfyniad"
     },
-    subheadline: "£40 miliwn ar gyfer y Fro. £750,000 wedi'i wario gennych chi, i chi",
+    subheadline: "£41.5 miliwn ar gyfer y Fro: ein cymuned yn penderfynu sut i'w wario",
     ctaTitle: "Beth Sy'n Digwydd?",
-    ctaBody1: "Fel rhan o [cynllun] Llafur, rydw i wedi sicrhau £[swm] ar gyfer Bro Morgannwg",
-    ctaBody2: "Rydw i'n agor y llawr i chi i'n helpu i benderfynu sut i ddefnyddio'r cyfle cyffrous hwn",
+    ctaBody1: "Mae pobl yn flin o wleidyddion yn gwastraffu eu harian.\nFelly yn y Fro, rydym yn gwneud pethau'n wahanol.\nRydym wedi sicrhau £41.5 miliwn ar gyfer buddsoddiad lleol a chi fydd yn penderfynu sut i'w wario.\nO strydoedd uchel i brosiectau ieuenctid, y tro hwn ein cymuned sy'n penderfynu.",
+    ctaBody2: "",
     ctaButton: "Cael Eich Dweud",
     findOutMore: "Darganfod mwy",
     watchVideo: "Gwyliwch y Fideo",
@@ -52,6 +54,8 @@ const translations = {
 const LandingPage: React.FC = () => {
   const [isPlayerOpen, setIsPlayerOpen] = useState(false);
   const [isHoveringVideo, setIsHoveringVideo] = useState(false);
+  const [pins, setPins] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const { x, y } = useMousePosition();
   const videoRef = useRef<HTMLVideoElement>(null);
   const { language } = useLanguage();
@@ -70,6 +74,31 @@ const LandingPage: React.FC = () => {
       }
     }
   }, [isPlayerOpen]);
+
+  useEffect(() => {
+    loadApprovedPins();
+  }, []);
+
+  const loadApprovedPins = async () => {
+    try {
+      setLoading(true);
+      const approvedPins = await getApprovedPins();
+      
+      // Filter out old x/y format pins and only show lng/lat pins
+      const convertedPins = approvedPins.map(pin => {
+        if ('x' in pin && 'y' in pin && !('lng' in pin)) {
+          return null;
+        }
+        return pin;
+      }).filter(Boolean);
+      
+      setPins(convertedPins);
+    } catch (error) {
+      console.error('Error loading pins:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const cursorVariants = {
     default: {
@@ -216,6 +245,56 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
       </div>
+
+      {/* Community Suggestions Map Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-brand-blue mb-4">
+                Community Ideas
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
+                See what matters to your community in the vale
+              </p>
+            </div>
+          </ScrollReveal>
+          
+          <ScrollReveal direction="up" delay={200}>
+            <div className="w-full h-[500px] rounded-lg overflow-hidden">
+              {loading ? (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-brand-blue mx-auto mb-4"></div>
+                    <p className="text-gray-600">Loading community suggestions...</p>
+                  </div>
+                </div>
+              ) : pins.length === 0 ? (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                  <div className="text-center">
+                    <div className="text-6xl mb-4">🗺️</div>
+                    <h3 className="text-2xl font-bold text-gray-600 mb-4">
+                      No suggestions yet
+                    </h3>
+                    <p className="text-gray-500 mb-6">
+                      Be the first to add your ideas for the Vale!
+                    </p>
+                    <Link
+                      to="/sign"
+                      className="inline-block px-6 py-3 bg-brand-blue text-white rounded-full font-semibold hover:bg-brand-blue/90 transition-colors"
+                    >
+                      Add Your Suggestion
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <MapboxCommunityMap pins={pins} />
+              )}
+            </div>
+            
+          </ScrollReveal>
+        </div>
+      </section>
 
       {/* Additional Info Sections */}
       <section
