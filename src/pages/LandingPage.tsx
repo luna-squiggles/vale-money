@@ -167,8 +167,20 @@ const LandingPage: React.FC = () => {
             {/* Video on the Left */}
             <div>
               <div 
-                className="relative aspect-square overflow-hidden rounded-2xl shadow-2xl cursor-pointer hover:scale-105 transition-transform duration-300"
-                onClick={() => setIsPlayerOpen(true)}
+                className="relative aspect-square overflow-hidden rounded-2xl shadow-2xl hover:scale-105 transition-transform duration-300"
+                onClick={() => {
+                  if (videoRef.current) {
+                    if (videoRef.current.muted) {
+                      // If muted, unmute and play from start
+                      videoRef.current.currentTime = 0;
+                      videoRef.current.muted = false;
+                      videoRef.current.play();
+                    } else {
+                      // If unmuted, mute it
+                      videoRef.current.muted = true;
+                    }
+                  }
+                }}
                 onMouseEnter={() => setIsHoveringVideo(true)}
                 onMouseLeave={() => setIsHoveringVideo(false)}
               >
