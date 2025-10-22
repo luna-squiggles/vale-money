@@ -149,7 +149,7 @@ const LandingPage: React.FC = () => {
             </button>
             <div className="aspect-video">
               <video
-                src="/placeholder-square.mp4"
+                src="/KN-Our-Cash-Your-Call.mp4"
                 className="w-full h-full"
                 controls
                 autoPlay
@@ -180,7 +180,7 @@ const LandingPage: React.FC = () => {
                   playsInline
                   className="w-full h-full object-cover"
                 >
-                  <source src="/placeholder-square.mp4" type="video/mp4" />
+                  <source src="/KN-Our-Cash-Your-Call.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
                 {/* Play overlay */}
@@ -210,22 +210,29 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Call to Action Section */}
-      <div className="relative bg-white">
-        <section className="relative z-20 pt-10 pb-10 px-4 bg-white">
-          <div className="max-w-4xl mx-auto text-center">
-            <ScrollReveal direction="up">
-              <h2
-                className="text-4xl md:text-5xl font-bold mb-8 text-brand-blue"
-              >
-                {t.ctaTitle}
-              </h2>
+      <div className="relative bg-brand-red">
+        {/* Top diagonal separator */}
+        <div className="absolute top-0 left-0 w-full h-[12vw] max-h-48 -mt-[6vw]" aria-hidden="true">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <polygon points="0,35 100,0 100,100 0,65" fill="#B8336A" />
+          </svg>
+        </div>
+
+        <section className="relative z-20 pt-16 pb-12 px-4 bg-brand-red">
+           <div className="max-w-4xl mx-auto text-center pb-0">
+             <ScrollReveal direction="up">
+               <h2
+                 className="text-4xl md:text-5xl font-bold mb-8 text-white"
+               >
+                 {t.ctaTitle}
+               </h2>
             </ScrollReveal>
             
             <ScrollReveal direction="up" delay={200}>
-              <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
                 {t.ctaBody1}
               </p>
-              <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
                 {t.ctaBody2}
               </p>
             </ScrollReveal>
@@ -234,7 +241,7 @@ const LandingPage: React.FC = () => {
               <div className="flex justify-center items-center">
                 <Link
                   to="/sign"
-                  className="inline-flex items-center px-8 py-4 text-lg font-semibold text-white rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl bg-brand-blue"
+                  className="inline-flex items-center px-8 py-4 text-lg font-semibold text-brand-blue rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl bg-white"
                   onClick={() => setIsNavigating(true)}
                 >
                   <FileSignature className="mr-3" size={24} />
@@ -244,24 +251,32 @@ const LandingPage: React.FC = () => {
             </ScrollReveal>
           </div>
         </section>
+        {/* Bottom diagonal separator */}
+        <div className="relative">
+          <div className="absolute bottom-0 left-0 w-full h-[12vw] max-h-48 -mb-[6vw]" aria-hidden="true">
+            <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <polygon points="0,35 100,0 100,65 0,100" fill="#B8336A" />
+            </svg>
+          </div>
+        </div>
       </div>
 
       {/* Community Suggestions Map Section */}
-      <section className="py-16 px-4 bg-white">
+      <section className="pt-28 pb-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal direction="up">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-brand-blue mb-4">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl md:text-4xl font-bold text-brand-blue mb-5">
                 Community Ideas
               </h2>
-              <p className="text-lg text-gray-600 mb-8">
-                See what matters to your community in the vale
+              <p className="text-lg text-gray-600 mb-10">
+                See what matters to your community in the Vale
               </p>
             </div>
           </ScrollReveal>
           
           <ScrollReveal direction="up" delay={200}>
-            <div className="w-full h-[500px] rounded-lg overflow-hidden">
+            <div className="w-full h-[520px] rounded-lg overflow-hidden">
               {loading ? (
                 <div className="w-full h-full flex items-center justify-center bg-gray-100">
                   <div className="text-center">

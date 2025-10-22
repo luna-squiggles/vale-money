@@ -20,7 +20,7 @@ interface MapboxInteractiveMapProps {
 const translations = {
   en: {
     mapTitle: "Where should we invest?",
-    mapInstruction: "Click anywhere on the map to add a pin and tell us what you'd like to see in that area",
+    mapInstruction: "Click anywhere on the map to add a pin and shape local investment",
     modalTitle: "What would you like to see here?",
     placeholder: "New Playground, Cycle Lane",
     cancel: "Cancel",
@@ -116,17 +116,18 @@ const MapboxInteractiveMap: React.FC<MapboxInteractiveMapProps> = ({ onComplete,
 
   return (
     <div className="w-full">
-      <div className="mb-6 text-center px-4">
-        <h3 className="text-2xl font-bold text-brand-blue mb-2">
-          {t.mapTitle}
-        </h3>
-        <p className="text-gray-600">
-          {t.mapInstruction}
-        </p>
-      </div>
-
       {/* Map Container */}
-      <div className="w-full h-[600px] relative">
+      <div className="w-full h-[800px] relative">
+        {/* Floating Instructions Overlay */}
+        <div className="absolute top-20 left-4 z-10 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-4 max-w-sm">
+          <h3 className="text-lg font-bold text-brand-blue mb-2">
+            {t.mapTitle}
+          </h3>
+          <p className="text-sm text-gray-600">
+            {t.mapInstruction}
+          </p>
+        </div>
+
         <Map
           {...viewState}
           onMove={evt => setViewState(evt.viewState)}

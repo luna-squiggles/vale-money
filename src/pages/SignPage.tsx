@@ -10,7 +10,7 @@ import { submitConsultationData } from '../services/submissionService';
 
 const translations = {
   en: {
-    title: "You decide",
+    title: "You Decide",
     subtitle: "Your community. Your choices.\nTell us what matters most for the Vale.",
     formTitle: "Have Your Say",
     infoTitle: "Why get involved?",
@@ -100,7 +100,7 @@ const SignPage: React.FC = () => {
       </div>
 
       {/* Interactive Map Section */}
-      <section className="pt-32 bg-white">
+      <section className="bg-white">
         <ScrollReveal direction="up" delay={300}>
             <MapboxInteractiveMap onComplete={handleMapComplete} onSubmit={handleFormSubmission} />
         </ScrollReveal>

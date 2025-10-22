@@ -24,7 +24,7 @@ const MapboxCommunityMap: React.FC<MapboxCommunityMapProps> = ({ pins }) => {
   });
 
   return (
-    <div className="w-full h-[600px] relative">
+    <div className="w-full h-[640px] relative">
       <Map
         {...viewState}
         onMove={evt => setViewState(evt.viewState)}
