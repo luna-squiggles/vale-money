@@ -164,52 +164,20 @@ const SignPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Diagonal Separator */}
-      <div className="relative bg-white -mb-1">
+      {/* Diagonal Separator - Commented out */}
+      {/* <div className="relative bg-white -mb-1">
         <div className="absolute top-0 left-0 w-full h-[12vw] max-h-48 -mt-[6vw] z-10">
           <svg
             className="w-full h-full fill-brand-green"
-            xmlns="http://www.w.org/2000/svg"
+            xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
           >
             <polygon points="0,35 100,0 100,65 0,100" />
           </svg>
         </div>
-      </div>
+      </div> */}
 
-      {/* Additional Info */}
-      <section className="pt-28 pb-10 px-4">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal direction="up">
-            <div className="text-center">
-              <h3 
-                className="text-3xl font-bold mb-6 text-brand-blue"
-              >
-                {t.infoTitle}
-              </h3>
-              <div className="grid md:grid-cols-2 gap-8 mt-12">
-                <div className="text-left">
-                  <h4 className="text-xl font-semibold mb-3 text-brand-blue">
-                    {t.impactTitle}
-                  </h4>
-                  <p className="text-gray-600">
-                    {t.impactBody}
-                  </p>
-                </div>
-                <div className="text-left">
-                  <h4 className="text-xl font-semibold mb-3 text-brand-blue">
-                    {t.processTitle}
-                  </h4>
-                  <p className="text-gray-600">
-                    {t.processBody}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
     </div>
   );
 };
