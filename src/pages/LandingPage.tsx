@@ -43,7 +43,7 @@ const translations = {
     },
     subheadline: "£41.5 miliwn ar gyfer y Fro: ein cymuned yn penderfynu sut i'w wario",
     ctaTitle: "Beth Sy'n Digwydd?",
-    ctaBody1: "Mae pobl yn flin o wleidyddion yn gwastraffu eu harian.\nFelly yn y Fro, rydym yn gwneud pethau'n wahanol.\nRydym wedi sicrhau £41.5 miliwn ar gyfer buddsoddiad lleol a chi fydd yn penderfynu sut i'w wario.\nO strydoedd uchel i brosiectau ieuenctid, y tro hwn ein cymuned sy'n penderfynu.",
+    ctaBody1: "Mae pobl yn rhwystredig gyda gwleidyddion yn gwastraffu eu harian.\nFelly yn y Fro, dyn ni yn gwneud pethau'n wahanol.\nDyn ni wedi sicrhau £41.5 miliwn ar gyfer buddsoddiad lleol a chi fydd yn penderfynu sut i'w wario.\nO strydoedd uchel i brosiectau ieuenctid, y tro hwn ein cymuned sy'n penderfynu.",
     ctaBody2: "",
     ctaButton: "Cael Eich Dweud",
     findOutMore: "Darganfod mwy",
