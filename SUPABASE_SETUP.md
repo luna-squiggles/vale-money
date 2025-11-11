@@ -24,6 +24,19 @@ CREATE INDEX idx_consultation_submissions_approved ON consultation_submissions(a
 CREATE INDEX idx_consultation_submissions_created_at ON consultation_submissions(created_at);
 ```
 
+## 2.1. Add Processed Column (Optional - for Admin Features)
+
+If you want to mark submissions as processed in the admin panel, add this column:
+
+```sql
+-- Add processed column to track which submissions have been processed
+ALTER TABLE consultation_submissions 
+ADD COLUMN IF NOT EXISTS processed BOOLEAN DEFAULT false;
+
+-- Create an index for faster queries
+CREATE INDEX idx_consultation_submissions_processed ON consultation_submissions(processed);
+```
+
 ## 3. Environment Variables
 
 Create a `.env` file in your project root with:
